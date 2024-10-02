@@ -27,7 +27,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-color: #072336;
+  background-color: #66ccff;
 }
 
 body {
@@ -46,6 +46,13 @@ body {
   max-width: 42em;
 }
 
+#logo {
+  width: 275px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Center horizontally */
+}
 
 /*
  * Header
@@ -53,11 +60,20 @@ body {
 
 .masthead {
   margin-bottom: 2rem;
-  color: #fff;
-  /*background-color: #333; *//* Set to your desired secondary color */
+  color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, .5); /* Set to your desired secondary color */
   width: 100%;
   text-align: center;
   padding: 20px 0;
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it stays above other content */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.masthead.translucent {
+  background-color: rgba(51, 51, 51, 0.8); /* Translucent background */
 }
 
 .masthead-brand {
@@ -113,4 +129,10 @@ body {
  */
 .mastfoot {
   color: rgba(255, 255, 255, .5);
+  text-align: center; /* Center the text */
+  width: 100%; /* Ensure it takes the full width */
+  padding: 20px 0; /* Add some padding for better spacing */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }

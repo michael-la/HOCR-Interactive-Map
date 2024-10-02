@@ -24,70 +24,83 @@
       #map {
         height: 600px;
         width: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
       }
-
-      .masthead {
-        text-align: center;
-        padding: 20px;
-      }
-
 
     </style>
 
   </head>
 
-  <body class="text-center" >
+  <body class="text-center">
 
-  <div class="cover-container d-flex h-100 p-3 w-100 flex-column">
-    <header class="masthead mb-auto">
-      <div class="row">
-        <div class="col-12">
-          <div class="inner">
-            <img src="HOCR_logo.png" class="img-fluid" alt="HOCR 2024 Interactive Map">
+    <div class="container-fluid">
+      <header id="header" class="header-scrolled">
+        <div class="row">
+          <div class="masthead">
+            <div id="logo" class="pull-center">
+              <img src="HOCR_logo.png" class="img-fluid" alt="HOCR 2024 Interactive Map">
+
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+      <main role="main" class="inner cover">
+        <div class="row">
+          <div class="col-md col-lg"></div>
+          <div class="col-md-8 col-lg-6">
+            <div id="map"></div>
+          </div>
+          <div class="col-md col-lg"></div>
 
-    <main role="main" class="inner cover">
-      <div id="map"></div>
-    </main>
+        </div>
+      </main>
+      <footer class="mastfoot mt-auto">
+        <div class="row">
+          <p>Interactive Map for TRC, by Michael LaBarbera.</p>
+        </div>
+      </footer>
+    </div>
 
-    <footer class="mastfoot mt-auto">
-      <div class="inner">
-        <p>Interactive Map for TRC, by Michael LaBarbera.</p>
-      </div>
-    </footer>
-  </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      // Initialize the map and set its view
+      var map = L.map('map').setView([42.37001850747499, -71.122198968052], 14);
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-    // Initialize the map and set its view
-    var map = L.map('map').setView([42.37001850747499, -71.122198968052], 14);
+      // Add a tile layer (OpenStreetMap in this case)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+      }).addTo(map);
 
-    // Add a tile layer (OpenStreetMap in this case)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(map);
+      // Define pin locations with popup information
+      var locations = [
+        {lat: 42.353309341261244, lon: -71.10778494801265, info: "<h>Start Line Cam</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
+        {lat: 42.358130770586165, lon: -71.1158307850982, info: "<h>Riverside Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
+        {lat: 42.36960792579024, lon: -71.12214642765557, info: "<h>Harvard/Weld Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
+        {lat: 42.37227516151648, lon: -71.1338208172092, info: "<h>Cambridge Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
+        {lat: 42.36607614458851, lon:  -71.13555268625522, info: "<h>Awards Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
+        {lat: 42.35728511957582, lon: -71.11431041687294, info: "<h>Microcenter</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"}
+      ];
 
-    // Define pin locations with popup information
-    var locations = [
-      {lat: 42.353309341261244, lon: -71.10778494801265, info: "<h>Start Line Cam</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-      {lat: 42.358130770586165, lon: -71.1158307850982, info: "<h>Riverside Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-      {lat: 42.36960792579024, lon: -71.12214642765557, info: "<h>Harvard/Weld Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-      {lat: 42.37227516151648, lon: -71.1338208172092, info: "<h>Cambridge Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-      {lat: 42.36607614458851, lon:  -71.13555268625522, info: "<h>Awards Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-      {lat: 42.35728511957582, lon: -71.11431041687294, info: "<h>Microcenter</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"}
-    ];
+      // Add markers and popups
+      locations.forEach(function(location) {
+        L.marker([location.lat, location.lon])
+                .addTo(map)
+                .bindPopup(location.info);
+      });
 
-    // Add markers and popups
-    locations.forEach(function(location) {
-      L.marker([location.lat, location.lon])
-              .addTo(map)
-              .bindPopup(location.info);
-    });
+    </script>
 
-  </script>
+    <script>
+      window.addEventListener('scroll', function() {
+        var masthead = document.querySelector('.masthead');
+        if (window.scrollY > 50) {
+          masthead.classList.add('translucent');
+        } else {
+          masthead.classList.remove('translucent');
+        }
+      });
+    </script>
 
   </body>
 </html>
