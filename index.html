@@ -15,6 +15,8 @@
 
     <link rel="icon" href="favicon.ico">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <title>HOCR 2024 Interactive Map</title>
 
     <!-- Custom styles for this template -->
@@ -28,6 +30,13 @@
         //border-radius: 5px;
       }
 
+      .material-symbols-outlined {
+        font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+      }
     </style>
 
   </head>
@@ -54,9 +63,8 @@
             <div class="card">
               <div id="map" class="card-img-top"></div>
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title">Live Broadcast Map</h5>
+                <p class="card-text">Use this map to view location-specific broadcasts from around the course!</p>
               </div>
             </div>
           </div>
@@ -74,26 +82,46 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
       // Initialize the map and set its view
-      var map = L.map('map').setView([42.37001850747499, -71.122198968052], 14);
+      var map = L.map('map').setView([42.36606751771098, -71.1220056011106], 14);
 
       // Add a tile layer (OpenStreetMap in this case)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
       }).addTo(map);
 
+      var LeafIcon = L.Icon.extend({
+        options: {
+          iconSize:     [38, 95],
+          shadowSize:   [50, 64],
+          iconAnchor:   [22, 94],
+          shadowAnchor: [4, 62],
+          popupAnchor:  [-3, -76]
+        }
+      });
+
+      var   cameraIcon = new LeafIcon({iconUrl: 'icons/videocam_20dp_000000_FILL1_wght400_GRAD0_opsz20.svg'}),
+            startLineIcon = new LeafIcon({iconUrl: 'icons/home_20dp_000000_FILL1_wght400_GRAD0_opsz20.svg'}),
+            awardsIcon = new LeafIcon({iconUrl: 'icons/trophy_20dp_000000_FILL1_wght400_GRAD0_opsz20.svg'});
+
+
       // Define pin locations with popup information
       var locations = [
-        {lat: 42.353309341261244, lon: -71.10778494801265, info: "<h>Start Line Cam</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-        {lat: 42.358130770586165, lon: -71.1158307850982, info: "<h>Riverside Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-        {lat: 42.36960792579024, lon: -71.12214642765557, info: "<h>Harvard/Weld Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-        {lat: 42.37227516151648, lon: -71.1338208172092, info: "<h>Cambridge Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-        {lat: 42.36607614458851, lon:  -71.13555268625522, info: "<h>Awards Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
-        {lat: 42.35728511957582, lon: -71.11431041687294, info: "<h>Microcenter</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"}
+        //{lat: 42.353309341261244, lon: -71.10778494801265, info: "<h>Start Line Cam</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
+        {lat: 42.358130770586165, lon: -71.1158307850982, info: "<h>Riverside Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>Livestream</a></p>"},
+        {lat: 42.36960792579024, lon: -71.12214642765557, info: "<h>Harvard/Weld Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>Livestream</a></p>"},
+        {lat: 42.37227516151648, lon: -71.1338208172092, info: "<h>Cambridge Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>Livestream</a></p>"},
+        //{lat: 42.36607614458851, lon:  -71.13555268625522, info: "<h>Awards Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"},
+        //{lat: 42.35728511957582, lon: -71.11431041687294, info: "<h>Microcenter</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>'External Link'</a></p>"}
       ];
+
+      var startLine = L.marker([42.353309341261244, -71.10778494801265], {icon: startLineIcon}).addTo(map).bindPopup("<h>Start Line Cam</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>Livestream</a></p>");
+      var awards = L.marker([42.36607614458851, -71.13555268625522], {icon: awardsIcon}).addTo(map).bindPopup("<h>Awards Broadcast</h><p><a href='https://www.youtube.com/watch?v=As6NUF8SuKM'>Livestream</a></p>");
+
+
 
       // Add markers and popups
       locations.forEach(function(location) {
-        L.marker([location.lat, location.lon])
+        L.marker([location.lat, location.lon], {icon: cameraIcon})
                 .addTo(map)
                 .bindPopup(location.info);
       });
