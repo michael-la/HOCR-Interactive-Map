@@ -67,6 +67,14 @@ body {
   margin: 0 auto; /* Center horizontally */
 }
 
+#trc {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Center horizontally */
+}
+
 /*
  * Header
  */
@@ -146,6 +154,7 @@ body {
   width: 100%; /* Ensure it takes the full width */
   padding: 20px 0; /* Add some padding for better spacing */
   display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Stack items vertically */
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
 }
