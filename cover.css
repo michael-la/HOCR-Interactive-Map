@@ -53,6 +53,7 @@ body {
 }
 .card-body {
   background-color: #285971;
+  font-family: 'Oswald', serif;
 }
 
 .cover-container {
@@ -86,8 +87,6 @@ body {
   width: 100%;
   text-align: center;
   padding: 20px 0;
-  position: -webkit-sticky; /* For Safari */
-  position: sticky;
   top: 0;
   z-index: 1000; /* Ensure it stays above other content */
   transition: background-color 0.3s ease; /* Smooth transition for background color */
